@@ -1,9 +1,9 @@
 ```sh
-cp shell.qml ~/.config/quickshell
+cp *.qml ~/.config/quickshell/
 ```
 
 ```sh
-while inotifywait -e close_write shell.qml; do
-  cp shell.qml ~/.config/quickshell
+while inotifywait -e close_write *.qml; do
+  cp *.qml ~/.config/quickshell/
 done
 ```
