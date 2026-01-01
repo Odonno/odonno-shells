@@ -68,7 +68,7 @@ Item {
         property var iconName: getIconName(appId)
         property string appIcon: Quickshell.iconPath(appId, true) || Quickshell.iconPath(iconName, true) || Quickshell.iconPath(appTitle, true)
 
-        property var focused: workspace?.focused
+        property bool focused: !!workspace?.focused
 
         Text {
           visible: !appIcon
@@ -84,6 +84,16 @@ Item {
           width: 14
           height: 14
           source: appIcon
+        }
+
+        // mimick bottom border
+        Rectangle {
+          visible: focused
+          anchors.left: parent.left
+          anchors.right: parent.right
+          anchors.bottom: parent.bottom
+          height: 2
+          color: Theme.primaryColor
         }
 
         MouseArea {
