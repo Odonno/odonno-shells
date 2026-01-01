@@ -35,8 +35,8 @@ PanelWindow {
       Image {
         id: icon
         anchors.centerIn: parent
-        width: 18
-        height: 18
+        width: 15
+        height: 15
 
         source: "icons/arch-linux.svg"
         fillMode: Image.PreserveAspectFit
@@ -56,9 +56,9 @@ PanelWindow {
     }
 
     Item {
-        height: 26
+      height: 26
 
-        Workspaces {}
+      Workspaces {}
     }
 
     Item { Layout.fillWidth: true }
@@ -245,6 +245,40 @@ PanelWindow {
         onPressed: memoryText.opacity = 0.6
         onReleased: memoryText.opacity = 1.0
         onExited: memoryText.opacity = 1.0
+      }
+    }
+
+    Rectangle {
+      color: Theme.backgroundColor
+      implicitWidth: 70
+      implicitHeight: 26
+      radius: Theme.radius
+      visible: Weather.textValue
+
+      RowLayout {
+        anchors.fill: parent
+        anchors.leftMargin: 8
+        anchors.rightMargin: 8
+
+        Text {
+          color: Theme.textColor
+          font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
+          text: Weather.textIcon
+        }
+        Item {
+          Layout.fillWidth: true
+        }
+        Text {
+          color: Theme.textColor
+          font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
+          text: Weather.textValue
+        }
+        Text {
+          color: Theme.textColor
+          font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
+          text: Weather.textUnit
+          opacity: 0.6
+        }
       }
     }
 
