@@ -10,6 +10,7 @@ Singleton {
   property int interval: 2 * 1000 
   property int cpuUsage: 0
   property string remainingMemory: "N/A"
+  property string memoryUnit: ""
   property var lastCpuTotal: 0
   property var lastCpuIdle: 0
 
@@ -36,7 +37,7 @@ Singleton {
     Component.onCompleted: running = true
 	}
 
-	function formatMemory(bytes): string {
+	function formatMemory(bytes): var {
 		if (bytes === undefined || bytes === null || bytes < 0) {
 			return "N/A"
 		}
@@ -54,7 +55,7 @@ Singleton {
 			? Math.round(value)
 			: value.toFixed(1)
 
-		return formatted + units[unitIndex]
+		return [formatted, units[unitIndex]]
 	}
 
   Process {
@@ -69,7 +70,9 @@ Singleton {
 					var total = parseInt(parts[1]) || 1
 					var used = parseInt(parts[2]) || 0
 					
-					remainingMemory = formatMemory(total - used)
+					var tuple = formatMemory(total - used)
+					remainingMemory = tuple[0]
+					memoryUnit = tuple[1]
 				}
       }
       Component.onCompleted: running = true

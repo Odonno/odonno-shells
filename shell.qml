@@ -69,12 +69,32 @@ PanelWindow {
       implicitHeight: 26
       radius: Theme.radius
 
-      Text {
-        id: cpuText
-        anchors.centerIn: parent
-        text: "CPU: " + Metrics.cpuUsage + "%"
-        color: Theme.textColor
-        font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
+      RowLayout {
+        anchors.fill: parent
+        anchors.leftMargin: 8
+        anchors.rightMargin: 8
+
+        Text {
+          text: "CPU:"
+          color: Theme.textColor
+          font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
+          opacity: 0.6
+        }
+        Item {
+          Layout.fillWidth: true
+        }
+        Text {
+          id: cpuText
+          text: Metrics.cpuUsage
+          color: Theme.textColor
+          font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
+        }
+        Text {
+          text: "%"
+          color: Theme.textColor
+          font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
+          opacity: 0.6
+        }
       }
 
       MouseArea {
@@ -92,16 +112,36 @@ PanelWindow {
 
     Rectangle {
       color: Theme.backgroundColor
-      implicitWidth: 100
+      implicitWidth: 110
       implicitHeight: 26
       radius: Theme.radius
 
-      Text {
-        id: memoryText
-        anchors.centerIn: parent
-        text: "RAM: " + Metrics.remainingMemory
-        color: Theme.textColor
-        font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
+      RowLayout {
+        anchors.fill: parent
+        anchors.leftMargin: 8
+        anchors.rightMargin: 8
+
+        Text {
+          text: "RAM:"
+          color: Theme.textColor
+          font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
+          opacity: 0.6
+        }
+        Item {
+          Layout.fillWidth: true
+        }
+        Text {
+          id: memoryText
+          text: Metrics.remainingMemory
+          color: Theme.textColor
+          font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
+        }
+        Text {
+          text: Metrics.memoryUnit
+          color: Theme.textColor
+          font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
+          opacity: 0.6
+        }
       }
 
       MouseArea {
