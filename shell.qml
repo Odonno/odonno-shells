@@ -25,13 +25,15 @@ PanelWindow {
   }
 
   RowLayout {
+    Workspaces {}
+
     Item { Layout.fillWidth: true }
 
     Rectangle {
       color: Theme.backgroundColor
       implicitWidth: 80
       implicitHeight: 26
-      radius: 8
+      radius: Theme.radius
 
       Text {
         anchors.centerIn: parent
@@ -45,7 +47,7 @@ PanelWindow {
       color: Theme.backgroundColor
       implicitWidth: 100
       implicitHeight: 26
-      radius: 8
+      radius: Theme.radius
 
       Text {
         anchors.centerIn: parent
@@ -59,7 +61,7 @@ PanelWindow {
       color: Theme.backgroundColor
       implicitWidth: 60
       implicitHeight: 26
-      radius: 8
+      radius: Theme.radius
 
       Text {
         anchors.centerIn: parent
