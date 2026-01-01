@@ -2,6 +2,7 @@ import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Widgets
 import QtQuick
+import QtQuick.Layouts
 
 PanelWindow {
   id: root
@@ -23,17 +24,49 @@ PanelWindow {
     bottomMargin: 0
   }
 
-  Rectangle {
-    color: Theme.backgroundColor
-    implicitWidth: 50
-    implicitHeight: 30
-    radius: 8
+  RowLayout {
+    Item { Layout.fillWidth: true }
 
-    Text {
-      anchors.centerIn: parent
-      color: Theme.textColor
-      font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
-      text: Time.shortTime
+    Rectangle {
+      color: Theme.backgroundColor
+      implicitWidth: 80
+      implicitHeight: 26
+      radius: 8
+
+      Text {
+        anchors.centerIn: parent
+        text: "CPU: " + Metrics.cpuUsage + "%"
+        color: Theme.textColor
+        font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
+      }
+    }
+
+    Rectangle {
+      color: Theme.backgroundColor
+      implicitWidth: 100
+      implicitHeight: 26
+      radius: 8
+
+      Text {
+        anchors.centerIn: parent
+        text: "RAM: " + Metrics.remainingMemory
+        color: Theme.textColor
+        font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
+      }
+    }
+
+    Rectangle {
+      color: Theme.backgroundColor
+      implicitWidth: 60
+      implicitHeight: 26
+      radius: 8
+
+      Text {
+        anchors.centerIn: parent
+        color: Theme.textColor
+        font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
+        text: Time.shortTime
+      }
     }
   }
 }
