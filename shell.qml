@@ -70,10 +70,23 @@ PanelWindow {
       radius: Theme.radius
 
       Text {
+        id: cpuText
         anchors.centerIn: parent
         text: "CPU: " + Metrics.cpuUsage + "%"
         color: Theme.textColor
         font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
+      }
+
+      MouseArea {
+        anchors.fill: parent
+        hoverEnabled: true
+        onClicked: {
+          Quickshell.execDetached(["omarchy-launch-or-focus-tui", "btop"])
+        }
+
+        onPressed: cpuText.opacity = 0.6
+        onReleased: cpuText.opacity = 1.0
+        onExited: cpuText.opacity = 1.0
       }
     }
 
@@ -84,10 +97,23 @@ PanelWindow {
       radius: Theme.radius
 
       Text {
+        id: memoryText
         anchors.centerIn: parent
         text: "RAM: " + Metrics.remainingMemory
         color: Theme.textColor
         font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
+      }
+
+      MouseArea {
+        anchors.fill: parent
+        hoverEnabled: true
+        onClicked: {
+          Quickshell.execDetached(["omarchy-launch-or-focus-tui", "btop"])
+        }
+
+        onPressed: memoryText.opacity = 0.6
+        onReleased: memoryText.opacity = 1.0
+        onExited: memoryText.opacity = 1.0
       }
     }
 
@@ -102,6 +128,15 @@ PanelWindow {
         color: Theme.textColor
         font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
         text: Time.shortTime
+      }
+
+      MouseArea {
+        anchors.fill: parent
+        acceptedButtons: Qt.RightButton
+
+        onClicked: {
+          Quickshell.execDetached(["omarchy-launch-floating-terminal-with-presentation", "omarchy-tz-select"])
+        }
       }
     }
   }
