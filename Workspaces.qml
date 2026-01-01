@@ -14,7 +14,7 @@ Item {
     spacing: 8
 
     Repeater {
-      model: Hyprland.workspaces.values[Hyprland.workspaces.values.length - 1]?.id ?? 1
+      model: HyprlandState.maxId
       
       Rectangle {
         color: Theme.backgroundColor
@@ -22,7 +22,7 @@ Item {
         implicitWidth: 15
         implicitHeight: 26
         Layout.leftMargin: index === 0 ? xMargin : 0
-        Layout.rightMargin: index === (Hyprland.workspaces.values[Hyprland.workspaces.values.length - 1]?.id ?? 1) - 1 ? xMargin : 0
+        Layout.rightMargin: index === (HyprlandState.maxId - 1) ? xMargin : 0
 
         Text {
           property var workspace: Hyprland.workspaces.values.find(w => w.id === index + 1)
