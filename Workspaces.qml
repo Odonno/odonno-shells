@@ -90,7 +90,9 @@ Item {
           anchors.centerIn: parent
           width: 14
           height: 14
+
           source: appIcon
+          fillMode: Image.PreserveAspectFit
         }
 
         // mimick bottom border

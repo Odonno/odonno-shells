@@ -305,4 +305,12 @@ PanelWindow {
       }
     }
   }
+
+  Component.onCompleted: {
+    Hyprland.rawEvent.connect(function(event) {
+      if (event.name === "configreloaded") {
+        Theme.syncHyprland()
+      }
+    })
+  }
 }

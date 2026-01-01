@@ -1,8 +1,8 @@
 pragma Singleton
 
 import Quickshell
-
-// TODO : bind theme from hyperland
+import Quickshell.Io
+import QtQuick
 
 Singleton {
   id: root
@@ -12,6 +12,22 @@ Singleton {
   readonly property int radius: 8
   readonly property string backgroundColor: "black"
   readonly property string textColor: "white"
-  readonly property string primaryColor: "cyan"
+  property string primaryColor: "cyan"
   readonly property string inactiveColor: "#444b6a"
+
+  Process {
+    id: syncPrimaryColorProc
+    running: true
+    command: ["hyprctl", "getoption", "general:col.active_border"]
+    stdout: StdioCollector {
+      onStreamFinished: {
+        primaryColor = "#" + this.text.replace("custom type:", "").trim().split(/\s+/)[0]
+      }
+    }
+    Component.onCompleted: running = true
+  }
+
+  function syncHyprland() {
+    syncPrimaryColorProc.running = true
+  }
 }
