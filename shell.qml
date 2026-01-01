@@ -1,19 +1,12 @@
 import Quickshell
-import Quickshell.Io
 import Quickshell.Hyprland
 import Quickshell.Widgets
 import QtQuick
-
-// TODO : bind theme from hyperland
 
 PanelWindow {
   id: root
   color: "transparent"
   HyprlandWindow.opacity: 0.6
-
-  // Theme
-  readonly property string fontFamily: "JetBrainsMono Nerd Font"
-  readonly property int fontSize: 13
   
   anchors {
     top: true
@@ -31,15 +24,15 @@ PanelWindow {
   }
 
   Rectangle {
-    color: "black"
+    color: Theme.backgroundColor
     implicitWidth: 50
     implicitHeight: 30
     radius: 8
 
     Text {
       anchors.centerIn: parent
-      color: "white"
-      font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
+      color: Theme.textColor
+      font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
       text: Time.shortTime
     }
   }
