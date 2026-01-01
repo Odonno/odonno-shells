@@ -9,6 +9,44 @@ Item {
 
   readonly property int xMargin: 12
 
+  function readLocalFile(path) {
+    const xhr = new XMLHttpRequest()
+    xhr.open("GET", "file://" + path, false) 
+    xhr.send()
+
+    if (xhr.status === 0 || xhr.status === 200) {
+        return xhr.responseText
+    } else {
+        console.warn("Cannot read file:", path)
+        return ""
+    }
+}
+
+  function extractDesktopFile(appId): string {
+    const path = "/usr/share/applications/" + appId + ".desktop"
+    return readLocalFile(path)
+  }
+
+  function extractIconName(desktopFile): string {
+    const lines = desktopFile.split("\n")
+    for (const line of lines) {
+      if (line.startsWith("Icon=")) {
+        return line.split("=")[1].trim()
+      }
+    }
+
+    return ""
+  }
+
+  function getIconName(appId): string {
+    if (!appId) {
+      return ""
+    }
+
+    const desktopFile = extractDesktopFile(appId)
+    return extractIconName(desktopFile)
+  }
+
   RowLayout {
     id: workspacesRow
     spacing: 8
@@ -18,25 +56,39 @@ Item {
       
       Rectangle {
         color: Theme.backgroundColor
-        radius: Theme.radius
         implicitWidth: 15
         implicitHeight: 26
         Layout.leftMargin: index === 0 ? xMargin : 0
         Layout.rightMargin: index === (HyprlandState.maxId - 1) ? xMargin : 0
 
-        Text {
-          property var workspace: Hyprland.workspaces.values.find(w => w.id === index + 1)
-          property bool isActive: Hyprland.focusedWorkspace?.id === (index + 1)
+        property var workspace: Hyprland.workspaces.values.find(w => w.id === index + 1)
+        property var topLevel: workspace?.toplevels.values[0]
+        property var appTitle: topLevel?.wayland?.title
+        property var appId: topLevel?.wayland?.appId
+        property var iconName: getIconName(appId)
+        property string appIcon: Quickshell.iconPath(appId, true) || Quickshell.iconPath(iconName, true) || Quickshell.iconPath(appTitle, true)
 
+        property var focused: workspace?.focused
+
+        Text {
+          visible: !appIcon
           anchors.centerIn: parent
           text: index + 1
-          color: isActive ? Theme.primaryColor : (workspace ? Theme.textColor : Theme.inactiveColor)
+          color: focused ? Theme.primaryColor : (workspace ? Theme.textColor : Theme.inactiveColor)
           font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
+        }
 
-          MouseArea {
-            anchors.fill: parent
-            onClicked: Hyprland.dispatch("workspace " + (index + 1))
-          }
+        Image {
+          visible: !!appIcon
+          anchors.centerIn: parent
+          width: 14
+          height: 14
+          source: appIcon
+        }
+
+        MouseArea {
+          anchors.fill: parent
+          onClicked: Hyprland.dispatch("workspace " + (index + 1))
         }
       }
     }
