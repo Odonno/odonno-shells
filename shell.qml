@@ -70,6 +70,97 @@ PanelWindow {
       radius: Theme.radius
 
       RowLayout {
+        anchors.centerIn: parent
+        anchors.leftMargin: 8
+        anchors.rightMargin: 8
+
+        Rectangle {
+          color: "transparent"
+          implicitWidth: 16
+          implicitHeight: 26
+          
+          Text {
+            anchors.centerIn: parent
+            id: bluetoothText
+            text: ""
+            color: Theme.textColor
+            font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
+          }
+
+          MouseArea {
+            anchors.fill: parent
+            hoverEnabled: true
+            onClicked: {
+              Quickshell.execDetached(["omarchy-launch-bluetooth"])
+            }
+
+            onPressed: bluetoothText.opacity = 0.6
+            onReleased: bluetoothText.opacity = 1.0
+            onExited: bluetoothText.opacity = 1.0
+          }
+        }
+
+        Rectangle {
+          color: "transparent"
+          implicitWidth: 16
+          implicitHeight: 26
+          
+          Text {
+            anchors.centerIn: parent
+            id: networkText
+            text: "\uf1eb"
+            color: Theme.textColor
+            font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
+          }
+
+          MouseArea {
+            anchors.fill: parent
+            hoverEnabled: true
+            onClicked: {
+              Quickshell.execDetached(["omarchy-launch-wifi"])
+            }
+
+            onPressed: networkText.opacity = 0.6
+            onReleased: networkText.opacity = 1.0
+            onExited: networkText.opacity = 1.0
+          }
+        }
+
+        Rectangle {
+          color: "transparent"
+          implicitWidth: 20
+          implicitHeight: 26
+          
+          Text {
+            anchors.centerIn: parent
+            id: volumeText
+            text: "\uf028"
+            color: Theme.textColor
+            font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
+          }
+
+          MouseArea {
+            anchors.fill: parent
+            hoverEnabled: true
+            onClicked: {
+              Quickshell.execDetached(["omarchy-launch-or-focus-tui", "wiremix"])
+            }
+
+            onPressed: volumeText.opacity = 0.6
+            onReleased: volumeText.opacity = 1.0
+            onExited: volumeText.opacity = 1.0
+          }
+        }
+      }
+    }
+
+    Rectangle {
+      color: Theme.backgroundColor
+      implicitWidth: 80
+      implicitHeight: 26
+      radius: Theme.radius
+
+      RowLayout {
         anchors.fill: parent
         anchors.leftMargin: 8
         anchors.rightMargin: 8
