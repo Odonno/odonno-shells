@@ -25,7 +25,41 @@ PanelWindow {
   }
 
   RowLayout {
-    Workspaces {}
+    Rectangle {
+      id: menu
+      color: Theme.backgroundColor
+      width: 32
+      height: 26
+      radius: Theme.radius
+
+      Image {
+        id: icon
+        anchors.centerIn: parent
+        width: 18
+        height: 18
+
+        source: "icons/arch-linux.svg"
+        fillMode: Image.PreserveAspectFit
+      }
+
+      MouseArea {
+        anchors.fill: parent
+        hoverEnabled: true
+        onClicked: {
+          Quickshell.execDetached(["omarchy-menu"])
+        }
+
+        onPressed: icon.opacity = 0.6
+        onReleased: icon.opacity = 1.0
+        onExited: icon.opacity = 1.0
+      }
+    }
+
+    Item {
+        height: 26
+
+        Workspaces {}
+    }
 
     Item { Layout.fillWidth: true }
 

@@ -1,4 +1,5 @@
 ```sh
+cp -r icons ~/.config/quickshell/icons
 cp *.qml ~/.config/quickshell/
 ```
 
