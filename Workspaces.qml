@@ -66,7 +66,14 @@ Item {
         property var appTitle: topLevel?.wayland?.title
         property var appId: topLevel?.wayland?.appId
         property var iconName: getIconName(appId)
-        property string appIcon: Quickshell.iconPath(appId, true) || Quickshell.iconPath(iconName, true) || Quickshell.iconPath(appTitle, true)
+        property string appIcon: {
+          Quickshell.iconPath(appId, true) || 
+          Quickshell.iconPath(iconName, true) || 
+          Quickshell.iconPath(appTitle, true) || 
+          (appTitle?.includes("Discord") && Quickshell.iconPath("Discord", true)) || // custom fix for Discord
+          (appTitle?.includes("YouTube") && Quickshell.iconPath("YouTube", true)) || // custom fix for YouTube
+          ""
+        }
 
         property bool focused: !!workspace?.focused
 
