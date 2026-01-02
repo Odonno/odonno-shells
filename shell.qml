@@ -304,6 +304,34 @@ PanelWindow {
         }
       }
     }
+
+    Rectangle {
+      visible: System.updatesAvailable
+      color: Theme.backgroundColor
+      implicitWidth: 40
+      implicitHeight: 26
+      radius: Theme.radius
+
+      Text {
+        id: updateAvailableText
+        anchors.centerIn: parent
+        color: Theme.textColor
+        font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
+        text: "\uf021"
+      }
+
+      MouseArea {
+        anchors.fill: parent
+        hoverEnabled: true
+        onClicked: {
+          Quickshell.execDetached(["omarchy-launch-floating-terminal-with-presentation", "omarchy-update"])
+        }
+
+        onPressed: updateAvailableText.opacity = 0.6
+        onReleased: updateAvailableText.opacity = 1.0
+        onExited: updateAvailableText.opacity = 1.0
+      }
+    }
   }
 
   Component.onCompleted: {
