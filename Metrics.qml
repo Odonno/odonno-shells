@@ -7,7 +7,7 @@ import QtQuick
 Singleton {
   id: root
 
-  property int interval: 2 * 1000 
+  property int interval: 2 * Time.second 
   property int cpuUsage: 0
   property string remainingMemory: "N/A"
   property string memoryUnit: ""
@@ -59,32 +59,32 @@ Singleton {
 	}
 
   Process {
-      id: memProc
-      command: ["sh", "-c", "free | grep Mem"]
-      stdout: SplitParser {
-				onRead: data => {
-					if (!data) {
-							return
-					}
-					var parts = data.trim().split(/\s+/)
-					var total = parseInt(parts[1]) || 1
-					var used = parseInt(parts[2]) || 0
-					
-					var tuple = formatMemory(total - used)
-					remainingMemory = tuple[0]
-					memoryUnit = tuple[1]
+		id: memProc
+		command: ["sh", "-c", "free | grep Mem"]
+		stdout: SplitParser {
+			onRead: data => {
+				if (!data) {
+						return
 				}
-      }
-      Component.onCompleted: running = true
+				var parts = data.trim().split(/\s+/)
+				var total = parseInt(parts[1]) || 1
+				var used = parseInt(parts[2]) || 0
+				
+				var tuple = formatMemory(total - used)
+				remainingMemory = tuple[0]
+				memoryUnit = tuple[1]
+			}
+		}
+		Component.onCompleted: running = true
   }
 
   Timer {
-      interval: interval
-      running: true
-      repeat: true
-      onTriggered: {
-          cpuProc.running = true
-          memProc.running = true
-      }
+		interval: root.interval
+		running: true
+		repeat: true
+		onTriggered: {
+			cpuProc.running = true
+			memProc.running = true
+		}
   }
 }

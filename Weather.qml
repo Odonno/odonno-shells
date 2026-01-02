@@ -7,7 +7,7 @@ import QtQuick
 Singleton {
 	id: root
 
-	property int interval: 10 * 60 * 1000 
+	property int interval: 10 * Time.minute 
 	property string textIcon: ""
 	property string textValue: ""
 	property string textUnit: ""
@@ -31,7 +31,7 @@ Singleton {
 	}
 
   Timer {
-    interval: interval
+    interval: root.interval
     running: true
     repeat: true
     onTriggered: {

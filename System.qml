@@ -7,7 +7,7 @@ import QtQuick
 Singleton {
   id: root
 
-  property int interval: 60 * 60 * 1000 
+  property int interval: Time.hour 
   property bool updatesAvailable: false
 
   Process {
@@ -16,10 +16,11 @@ Singleton {
 		onExited: function (exitCode) {
 			updatesAvailable = exitCode === 0
 		}
+		Component.onCompleted: running = true
   }
 
   Timer {
-    interval: interval
+    interval: root.interval
     running: true
     repeat: true
     onTriggered: {
