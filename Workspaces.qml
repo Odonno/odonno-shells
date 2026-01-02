@@ -47,6 +47,8 @@ Item {
     return extractIconName(desktopFile)
   }
 
+  readonly property list<string> webAppNames: ["Discord", "YouTube", "GitHub"]
+
   RowLayout {
     id: workspacesRow
     spacing: 8
@@ -67,12 +69,16 @@ Item {
         property var appId: topLevel?.wayland?.appId
         property var iconName: getIconName(appId)
         property string appIcon: {
-          Quickshell.iconPath(appId, true) || 
-          Quickshell.iconPath(iconName, true) || 
-          Quickshell.iconPath(appTitle, true) || 
-          (appTitle?.includes("Discord") && Quickshell.iconPath("Discord", true)) || // custom fix for Discord
-          (appTitle?.includes("YouTube") && Quickshell.iconPath("YouTube", true)) || // custom fix for YouTube
-          ""
+          const possibleWebAppName = 
+            webAppNames
+            .filter(n => appTitle?.includes(n) || appId?.startsWith(`brave-${n.toLowerCase()}.com`))
+            [0]
+
+          Quickshell.iconPath(appId, true) 
+          || Quickshell.iconPath(iconName, true) 
+          || Quickshell.iconPath(appTitle, true) 
+          || (possibleWebAppName && Quickshell.iconPath(possibleWebAppName, true)) // custom fix for known web apps
+          || ""
         }
 
         property bool focused: !!workspace?.focused
