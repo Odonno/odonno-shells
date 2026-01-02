@@ -49,6 +49,5 @@ done
 Finally, run the quickshell project:
 
 ```sh
-export QML_XHR_ALLOW_FILE_READ=1
 qs
 ```
