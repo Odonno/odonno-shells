@@ -7,6 +7,7 @@ A custom module for Hyprland using Quickshell.
 ![Quickshell](https://img.shields.io/badge/Quickshell-0.2.1-blue?style=flat-square)
 ![Hyprland](https://img.shields.io/badge/Hyprland-Compatible-purple?style=flat-square)
 ![Qt6](https://img.shields.io/badge/Qt-6-green?style=flat-square)
+![License](https://img.shields.io/badge/License-MIT-orange?style=flat-square)
 
 </div>
 
