@@ -76,12 +76,16 @@ Rectangle {
         property var appId: topLevel?.wayland?.appId
         property var iconName: getIconName(appId)
         property string appIcon: {
+          if (appId === "dev.zed.Zed") {
+            return "/usr/share/icons/zed.png" // custom fix for Zed app
+          }
+          
           const possibleWebAppName = 
             webAppNames
             .filter(n => appTitle?.includes(n) || appId?.startsWith(`brave-${n.toLowerCase()}.com`))
             [0]
 
-          Quickshell.iconPath(appId, true) 
+          Quickshell.iconPath(appId, true)
           || Quickshell.iconPath(iconName, true) 
           || Quickshell.iconPath(appTitle, true) 
           || (possibleWebAppName && Quickshell.iconPath(possibleWebAppName, true)) // custom fix for known web apps
