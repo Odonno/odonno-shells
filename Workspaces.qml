@@ -53,6 +53,7 @@ Rectangle {
   }
 
   readonly property list<string> webAppNames: ["Discord", "YouTube", "GitHub"]
+  property Rectangle focusedItem: undefined
 
   RowLayout {
     id: workspacesRow
@@ -89,12 +90,25 @@ Rectangle {
 
         property bool focused: !!workspace?.focused
 
+        onFocusedChanged: {
+          if (focused) {
+            root.focusedItem = this
+          }
+        }
+
         Text {
           visible: !appIcon
           anchors.centerIn: parent
           text: index + 1
           color: focused ? Theme.primaryColor : (workspace ? Theme.textColor : Theme.inactiveColor)
           font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
+
+          Behavior on color {
+            ColorAnimation {
+              duration: 300
+              easing.type: Easing.InOutQuad
+            }
+          }
         }
 
         Image {
@@ -107,20 +121,35 @@ Rectangle {
           fillMode: Image.PreserveAspectFit
         }
 
-        // mimick bottom border
-        Rectangle {
-          visible: focused
-          anchors.left: parent.left
-          anchors.right: parent.right
-          anchors.bottom: parent.bottom
-          height: 2
-          color: Theme.primaryColor
-        }
-
         MouseArea {
           anchors.fill: parent
           onClicked: Hyprland.dispatch("workspace " + (index + 1))
         }
+      }
+    }
+  }
+
+  // mimick bottom border
+  Rectangle {
+    visible: !!root.focusedItem
+    height: 2
+    color: Theme.primaryColor
+    anchors.bottom: parent.bottom
+
+    x: root.focusedItem ? root.focusedItem.x : 0
+    width: root.focusedItem ? root.focusedItem.width : 0
+
+    Behavior on x {
+      NumberAnimation {
+        duration: 200
+        easing.type: Easing.InOutQuad
+      }
+    }
+
+    Behavior on width {
+      NumberAnimation {
+        duration: 200
+        easing.type: Easing.InOutQuad
       }
     }
   }
