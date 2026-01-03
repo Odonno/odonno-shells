@@ -57,21 +57,26 @@ PanelWindow {
       }
     }
 
-    Item {
-      height: 26
-
-      Workspaces {}
-    }
+    Workspaces {}
 
     Item { Layout.fillWidth: true }
 
     Rectangle {
       color: Theme.backgroundColor
-      implicitWidth: 80
-      implicitHeight: 26
       radius: Theme.radius
 
+      Layout.preferredWidth: utilitiesLabel.implicitWidth + 16
+      Layout.preferredHeight: utilitiesLabel.implicitHeight
+
+      Behavior on Layout.preferredWidth {
+        NumberAnimation {
+          duration: 300
+          easing.type: Easing.OutCirc
+        }
+      }
+
       RowLayout {
+        id: utilitiesLabel
         anchors.centerIn: parent
         anchors.leftMargin: 8
         anchors.rightMargin: 8
@@ -158,12 +163,21 @@ PanelWindow {
 
     Rectangle {
       color: Theme.backgroundColor
-      implicitWidth: 80
-      implicitHeight: 26
       radius: Theme.radius
 
+      Layout.preferredWidth: cpuLabel.implicitWidth + 16
+      Layout.preferredHeight: cpuLabel.implicitHeight + 10
+
+      Behavior on Layout.preferredWidth {
+        NumberAnimation {
+          duration: 300
+          easing.type: Easing.OutCirc
+        }
+      }
+
       RowLayout {
-        anchors.fill: parent
+        id: cpuLabel
+        anchors.centerIn: parent
         anchors.leftMargin: 8
         anchors.rightMargin: 8
 
@@ -205,11 +219,13 @@ PanelWindow {
 
     Rectangle {
       color: Theme.backgroundColor
-      implicitWidth: 110
-      implicitHeight: 26
       radius: Theme.radius
 
+      Layout.preferredWidth: memoryLabel.implicitWidth + 16
+      Layout.preferredHeight: memoryLabel.implicitHeight + 10
+
       RowLayout {
+        id: memoryLabel
         anchors.fill: parent
         anchors.leftMargin: 8
         anchors.rightMargin: 8
@@ -252,13 +268,22 @@ PanelWindow {
 
     Rectangle {
       color: Theme.backgroundColor
-      implicitWidth: 70
-      implicitHeight: 26
       radius: Theme.radius
       visible: Weather.textValue
 
+      Layout.preferredWidth: weatherLabel.implicitWidth + 16
+      Layout.preferredHeight: weatherLabel.implicitHeight + 10
+
+      Behavior on Layout.preferredWidth {
+        NumberAnimation {
+          duration: 300
+          easing.type: Easing.OutCirc
+        }
+      }
+
       RowLayout {
-        anchors.fill: parent
+        id: weatherLabel
+        anchors.centerIn: parent
         anchors.leftMargin: 8
         anchors.rightMargin: 8
 

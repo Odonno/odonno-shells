@@ -4,8 +4,13 @@ import Quickshell.Widgets
 import QtQuick
 import QtQuick.Layouts
 
-Item {
-  anchors.fill: parent
+Rectangle {
+  id: root
+  color: Theme.backgroundColor
+  radius: Theme.radius
+
+  implicitWidth: workspacesRow.implicitWidth
+  implicitHeight: workspacesRow.implicitHeight
 
   readonly property int xMargin: 12
 
@@ -51,6 +56,7 @@ Item {
 
   RowLayout {
     id: workspacesRow
+    anchors.fill: parent
     spacing: 8
 
     Repeater {
@@ -58,8 +64,8 @@ Item {
       
       Rectangle {
         color: Theme.backgroundColor
-        implicitWidth: 15
-        implicitHeight: 26
+        width: 15
+        height: 26
         Layout.leftMargin: index === 0 ? xMargin : 0
         Layout.rightMargin: index === (HyprlandState.maxId - 1) ? xMargin : 0
 
@@ -117,12 +123,5 @@ Item {
         }
       }
     }
-  }
-
-  Rectangle {
-    anchors.fill: workspacesRow
-    color: Theme.backgroundColor
-    radius: Theme.radius
-    z: -1
   }
 }
