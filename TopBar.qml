@@ -197,8 +197,15 @@ PanelWindow {
         Text {
           id: cpuText
           text: Metrics.cpuUsage
-          color: Theme.textColor
+          color: Metrics.cpuTemperatureColor
           font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
+
+          Behavior on color {
+            ColorAnimation {
+              duration: 300
+              easing.type: Easing.InOutExpo
+            }
+          }
         }
         Text {
           text: "%"

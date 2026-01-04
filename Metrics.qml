@@ -14,6 +14,12 @@ Singleton {
   property var lastCpuTotal: 0
   property var lastCpuIdle: 0
 
+	property int cpuTemperature: 0
+	property int minCpuTemperature: 60
+	property int maxCpuTemperature: 95
+	readonly property real cpuTemperatureLevel: (cpuTemperature - minCpuTemperature) / (maxCpuTemperature - minCpuTemperature)
+	readonly property var cpuTemperatureColor: Colors.lerpColor("#ffffff", "#ff4444", cpuTemperatureLevel)
+
 	// GPU data
   property int gpuUsage: 0
 
@@ -39,6 +45,22 @@ Singleton {
 
 				lastCpuTotal = total
 				lastCpuIdle = idle
+			}
+    }
+    Component.onCompleted: running = true
+	}
+
+  Process {
+    id: cpuTempProc
+    command: ["sh", "-c", "sensors | grep -i tctl"] // TODO : handle different CPU types
+    stdout: SplitParser {
+			onRead: data => {
+				if (!data) {
+					return
+				}
+
+				var p = data.trim().split(/\s+/)
+				cpuTemperature = parseInt(p[1])
 			}
     }
     Component.onCompleted: running = true
@@ -105,6 +127,7 @@ Singleton {
 		repeat: true
 		onTriggered: {
 			cpuProc.running = true
+			cpuTempProc.running = true
 			gpuProc.running = true
 			memProc.running = true
 		}
