@@ -219,6 +219,62 @@ PanelWindow {
       color: Theme.backgroundColor
       radius: Theme.radius
 
+      Layout.preferredWidth: gpuLabel.implicitWidth + 16
+      Layout.preferredHeight: gpuLabel.implicitHeight + 10
+
+      Behavior on Layout.preferredWidth {
+        NumberAnimation {
+          duration: 300
+          easing.type: Easing.OutCirc
+        }
+      }
+
+      RowLayout {
+        id: gpuLabel
+        anchors.centerIn: parent
+        anchors.leftMargin: 8
+        anchors.rightMargin: 8
+
+        Text {
+          text: "GPU:"
+          color: Theme.textColor
+          font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
+          opacity: 0.6
+        }
+        Item {
+          Layout.fillWidth: true
+        }
+        Text {
+          id: gpuText
+          text: Metrics.gpuUsage
+          color: Theme.textColor
+          font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
+        }
+        Text {
+          text: "%"
+          color: Theme.textColor
+          font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
+          opacity: 0.6
+        }
+      }
+
+      MouseArea {
+        anchors.fill: parent
+        hoverEnabled: true
+        onClicked: {
+          Quickshell.execDetached(["omarchy-launch-or-focus-tui", "btop"])
+        }
+
+        onPressed: gpuText.opacity = 0.6
+        onReleased: gpuText.opacity = 1.0
+        onExited: gpuText.opacity = 1.0
+      }
+    }
+
+    Rectangle {
+      color: Theme.backgroundColor
+      radius: Theme.radius
+
       Layout.preferredWidth: memoryLabel.implicitWidth + 16
       Layout.preferredHeight: memoryLabel.implicitHeight + 10
 

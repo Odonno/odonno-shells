@@ -22,7 +22,7 @@ A minimalistic top bar with the following features:
 * a home menu button (open menu widget)
 * an Hyprland workspace view (with icon for each workspace when possible)
 * utility links (bluetooth, network, volume)
-* system metrics (CPU, RAM)
+* system metrics (CPU, GPU, RAM)
 * current weather
 * current time
 * a button displayed when system updates are available

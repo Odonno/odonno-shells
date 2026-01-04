@@ -8,11 +8,18 @@ Singleton {
   id: root
 
   property int interval: 2 * Time.second 
+
+	// CPU data
   property int cpuUsage: 0
-  property string remainingMemory: "N/A"
-  property string memoryUnit: ""
   property var lastCpuTotal: 0
   property var lastCpuIdle: 0
+
+	// GPU data
+  property int gpuUsage: 0
+
+	// Memory data
+  property string remainingMemory: "N/A"
+  property string memoryUnit: ""
 
   Process {
     id: cpuProc
@@ -20,14 +27,14 @@ Singleton {
     stdout: SplitParser {
 			onRead: data => {
 				if (!data) {
-						return
+					return
 				}
 
 				var p = data.trim().split(/\s+/)
 				var idle = parseInt(p[4]) + parseInt(p[5])
 				var total = p.slice(1, 8).reduce((a, b) => a + parseInt(b), 0)
 				if (lastCpuTotal > 0) {
-						cpuUsage = Math.round(100 * (1 - (idle - lastCpuIdle) / (total - lastCpuTotal)))
+					cpuUsage = Math.round(100 * (1 - (idle - lastCpuIdle) / (total - lastCpuTotal)))
 				}
 
 				lastCpuTotal = total
@@ -36,6 +43,20 @@ Singleton {
     }
     Component.onCompleted: running = true
 	}
+	
+  Process {
+		id: gpuProc
+		command: ["nvidia-smi", "--query-gpu=utilization.gpu", "--format=csv,noheader,nounits"] // TODO : handle different GPU types
+		stdout: SplitParser {
+			onRead: data => {
+				if (data === undefined) {
+					return
+				}
+				gpuUsage = parseInt(data)
+			}
+		}
+		Component.onCompleted: running = true
+  }
 
 	function formatMemory(bytes): var {
 		if (bytes === undefined || bytes === null || bytes < 0) {
@@ -64,7 +85,7 @@ Singleton {
 		stdout: SplitParser {
 			onRead: data => {
 				if (!data) {
-						return
+					return
 				}
 				var parts = data.trim().split(/\s+/)
 				var total = parseInt(parts[1]) || 1
@@ -84,6 +105,7 @@ Singleton {
 		repeat: true
 		onTriggered: {
 			cpuProc.running = true
+			gpuProc.running = true
 			memProc.running = true
 		}
   }
