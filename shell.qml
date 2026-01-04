@@ -5,7 +5,9 @@ import Quickshell.Hyprland
 import QtQuick
 
 ShellRoot {
-  TopBar {}
+  TopBar {
+    gpu: false
+  }
 
   Component.onCompleted: {
     Hyprland.rawEvent.connect(function(event) {

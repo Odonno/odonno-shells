@@ -6,6 +6,11 @@ import QtQuick.Layouts
 
 PanelWindow {
   id: root
+
+  property bool cpu: true
+  property bool gpu: true
+  property bool ram: true
+
   color: "transparent"
   HyprlandWindow.opacity: 0.6
   
@@ -160,6 +165,7 @@ PanelWindow {
     }
 
     Rectangle {
+      visible: root.cpu
       color: Theme.backgroundColor
       radius: Theme.radius
 
@@ -216,6 +222,7 @@ PanelWindow {
     }
 
     Rectangle {
+      visible: root.gpu
       color: Theme.backgroundColor
       radius: Theme.radius
 
@@ -272,6 +279,7 @@ PanelWindow {
     }
 
     Rectangle {
+      visible: root.ram
       color: Theme.backgroundColor
       radius: Theme.radius
 
