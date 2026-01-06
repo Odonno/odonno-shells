@@ -341,7 +341,7 @@ PanelWindow {
       visible: Weather.textValue
 
       Layout.preferredWidth: weatherLabel.implicitWidth + 16
-      Layout.preferredHeight: weatherLabel.implicitHeight + 10
+      height: 26
 
       Behavior on Layout.preferredWidth {
         NumberAnimation {
